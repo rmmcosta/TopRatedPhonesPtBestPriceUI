@@ -5,21 +5,35 @@ const baseApiUrl = proxyurl + '/' + url;
 const myHeaders = new Headers();
 
 const myInit = {
-  method: 'GET',
-  headers: myHeaders,
-  mode: 'cors',
-  cache: 'default'
+    method: 'GET',
+    headers: myHeaders,
+    mode: 'cors',
+    cache: 'default'
 };
 
 $(() => {
     console.log('ready to start fetching data');
     const divPhones = $('#divPhones');
     fetch(baseApiUrl + '/readFile', myInit)
-        .then(html => {
-            divPhones.innerHtml = html;
-            console.log(html);
+        .then(function (response) {
+            // When the page is loaded convert it to text
+            return response.text()
         })
-        .catch(error => {
-            console.error(error);
+        .then(function (html) {
+            //console.log(html);
+            divPhones.html(html);
+        })
+        .catch(function (err) {
+            console.log('Failed to fetch page: ', err);
         });
+    const fileUpdateBtn = $('#fileUpdate');
+    fileUpdateBtn.click(() => {
+        fetch(baseApiUrl + '/startFile', myInit)
+            .then(msg => {
+                console.log(msg);
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    });
 });
