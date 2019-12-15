@@ -14,7 +14,7 @@ const myInit = {
 $(() => {
     console.log('ready to start fetching data');
     const divPhones = $('#divPhones');
-    fetch(baseApiUrl + '/phones', myInit)
+    fetch(baseApiUrl + '/readFile', myInit)
         .then(html => {
             divPhones.innerHtml = html;
             console.log(html);
